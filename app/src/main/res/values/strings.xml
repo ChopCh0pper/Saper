@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Saper</string>
+    <string name="new_game">Начать игру</string>
+    <string name="resum">Продолжить</string>
+    <string name="game_difficulty">Сложность:</string>
+    <string name="easy_difficult">Новичок (9X9)</string>
+    <string name="midl_difficult">Любитель (16X16)</string>
+    <string name="high_difficult">Профессионал (16X30)</string>
 </resources>
