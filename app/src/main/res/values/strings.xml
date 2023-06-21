@@ -6,4 +6,5 @@
     <string name="easy_difficult">Новичок (9X9)</string>
     <string name="midl_difficult">Любитель (16X16)</string>
     <string name="high_difficult">Профессионал (16X30)</string>
+    <string name="start_game">Начать игру</string>
 </resources>
