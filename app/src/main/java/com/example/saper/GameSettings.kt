@@ -1,12 +1,13 @@
 package com.example.saper
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
+import androidx.appcompat.app.AppCompatActivity
 import com.example.saper.constance.Constance
 import com.example.saper.databinding.ActivityGameSettingsBinding
+
 
 class GameSettings : AppCompatActivity() {
     lateinit var vb: ActivityGameSettingsBinding
@@ -16,8 +17,16 @@ class GameSettings : AppCompatActivity() {
         vb = ActivityGameSettingsBinding.inflate(layoutInflater)
         setContentView(vb.root)
 
+        vb.btStartGame.isEnabled = false
+
         val intent = Intent(this, Field::class.java)
-        intent.putExtra(Constance.INTENT_GAME_SETTINGS, selectedDifficult)
+
+
+        vb.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val radioButtonSelected = checkedId != -1
+            vb.btStartGame.isEnabled = radioButtonSelected
+        }
+
 
         vb.btStartGame.setOnClickListener {
             intent.putExtra(Constance.INTENT_GAME_SETTINGS, selectedDifficult)

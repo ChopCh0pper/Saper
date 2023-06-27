@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import com.example.saper.constance.Constance
 import com.example.saper.databinding.ActivityFieldBinding
+import com.example.saper.field.FieldGenerator
 import java.util.Objects
 
 class Field : AppCompatActivity() {
-    lateinit var vb: ActivityFieldBinding
+    private lateinit var vb: ActivityFieldBinding
+    private lateinit var field: FieldGenerator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vb = ActivityFieldBinding.inflate(layoutInflater)
@@ -18,11 +20,11 @@ class Field : AppCompatActivity() {
 
         when(resultDifficult) {
             Constance.INTENT_VALUE_EASY ->
-                vb.tvTest.text = "easy"
-            Constance.INTENT_VALUE_HIGH ->
-                vb.tvTest.text = "high"
+                field.generateEasyField()
             Constance.INTENT_VALUE_MIDL ->
-                vb.tvTest.text = "midl"
+                field.generateMidlField()
+            Constance.INTENT_VALUE_HIGH ->
+                field.generateHighField()
         }
     }
 }
