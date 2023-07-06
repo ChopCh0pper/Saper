@@ -43,8 +43,6 @@ class GameSettings : AppCompatActivity() {
                     if (checked) {selectedDifficult = Constance.INTENT_VALUE_EASY}
                 R.id.rbMidl ->
                     if (checked) {selectedDifficult = Constance.INTENT_VALUE_MIDL}
-                R.id.rbHigh ->
-                    if (checked) {selectedDifficult = Constance.INTENT_VALUE_HIGH}
             }
         }
     }

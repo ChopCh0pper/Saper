@@ -21,7 +21,7 @@ abstract class Generator{
             val col = random.nextInt(field[0].size)
 
             if (field[row][col].isBomb) {
-                continue // уже есть бомба в этой ячейке, попробуйте снова
+                continue
             }
 
             field[row][col].isBomb = true
@@ -32,14 +32,14 @@ abstract class Generator{
     protected fun generateNumbers() {
         val deltas = arrayOf(
             intArrayOf(-1, -1), intArrayOf(-1, 0), intArrayOf(-1, 1),
-            intArrayOf(0, -1), /* текущая ячейка */ intArrayOf(0, 1),
+            intArrayOf(0, -1), intArrayOf(0, 1),
             intArrayOf(1, -1), intArrayOf(1, 0), intArrayOf(1, 1)
         )
 
         for (row in 0 until field.size) {
             for (col in 0 until field[0].size) {
                 if (field[row][col].isBomb) {
-                    continue // это бомба, пропустить подсчет вокруг нее
+                    continue
                 }
 
                 var bombCount = 0
@@ -56,5 +56,7 @@ abstract class Generator{
             }
         }
     }
+
+
     data class Cell(var isBomb: Boolean = false, var bombCount: Int = 0)
 }

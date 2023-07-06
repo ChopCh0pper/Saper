@@ -1,14 +1,17 @@
 package com.example.saper
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.TextView
 import com.example.saper.field.Generator
 
-class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>) : BaseAdapter() {
+class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>, private val numColumns: Int) : BaseAdapter() {
 
     override fun getCount(): Int {
         return cells.size
@@ -38,21 +41,35 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
 
         val cell = cells[position]
         if (cell.isBomb) {
-            viewHolder.buttonCell.setBackgroundResource(R.drawable.bomb_button_bg)
+            viewHolder.cell.setBackgroundResource(R.drawable.bomb_button_bg)
         } else {
-            viewHolder.buttonCell.setBackgroundResource(R.drawable.empty_button_bg)
+            viewHolder.cell.setBackgroundResource(R.drawable.empty_button_bg)
         }
 
         if (cell.bombCount > 0) {
-            viewHolder.buttonCell.text = cell.bombCount.toString()
+            viewHolder.cell.text = cell.bombCount.toString()
         } else {
-            viewHolder.buttonCell.text = ""
+            viewHolder.cell.text = ""
         }
+
+        val screenWidth = getScreenWidth(context)
+        val cellSize = screenWidth / numColumns
+        val layoutParams = viewHolder.cell.layoutParams
+        layoutParams.width = cellSize
+        layoutParams.height = cellSize
+        viewHolder.cell.layoutParams = layoutParams
 
         return view
     }
 
     private class ViewHolder(view: View) {
-        val buttonCell: Button = view.findViewById(R.id.buttonCell)
+        val cell: TextView = view.findViewById(R.id.cell)
+    }
+
+    private fun getScreenWidth(context: Context): Int {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return displayMetrics.widthPixels
     }
 }
