@@ -58,5 +58,6 @@ abstract class Generator{
     }
 
 
-    data class Cell(var isBomb: Boolean = false, var bombCount: Int = 0)
+    data class Cell(var isBomb: Boolean = false, var bombCount: Int = 0,
+                    var ifFlag: Boolean = false, var isClosed: Boolean = true)
 }

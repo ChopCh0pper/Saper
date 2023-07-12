@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.BaseAdapter
-import android.widget.Button
 import android.widget.TextView
 import com.example.saper.field.Generator
 
 class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>, private val numColumns: Int) : BaseAdapter() {
-
+    private var isGameOver = false
     override fun getCount(): Int {
         return cells.size
     }
@@ -39,17 +38,23 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
             viewHolder = view.tag as ViewHolder
         }
 
-        val cell = cells[position]
-        if (cell.isBomb) {
-            viewHolder.cell.setBackgroundResource(R.drawable.bomb_button_bg)
-        } else {
-            viewHolder.cell.setBackgroundResource(R.drawable.empty_button_bg)
-        }
+        if (!isGameOver) {
+            viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
 
-        if (cell.bombCount > 0) {
-            viewHolder.cell.text = cell.bombCount.toString()
+            viewHolder.cell.setOnClickListener {
+                val cell = cells[position]
+
+                if (cell.isClosed) {
+                    if (cell.isBomb) gameOver(viewHolder)
+                    else gameContinue(cell, viewHolder)
+                }
+            }
         } else {
-            viewHolder.cell.text = ""
+            val cell = cells[position]
+            if (cell.isBomb) {
+                viewHolder.cell.setBackgroundResource(R.drawable.bomb_cell_bg)
+            }
+            viewHolder.cell.setOnClickListener(null)
         }
 
         val screenWidth = getScreenWidth(context)
@@ -71,5 +76,25 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         return displayMetrics.widthPixels
+    }
+
+    private fun gameOver(viewHolder: ViewHolder) {
+        isGameOver = true
+        /*
+            -выключение таймера
+            -удаление сохранений
+            -блокировка кнопки перезапуска игры
+         */
+        notifyDataSetChanged()
+    }
+
+    private fun gameContinue(cell: Generator.Cell, viewHolder: ViewHolder) {
+
+        viewHolder.cell.setBackgroundResource(R.drawable.empty_cell_bg)
+        if (cell.bombCount > 0) {
+            viewHolder.cell.text = cell.bombCount.toString()
+        } else {
+            viewHolder.cell.text = ""
+        }
     }
 }

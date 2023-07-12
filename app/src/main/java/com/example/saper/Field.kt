@@ -19,14 +19,11 @@ import kotlin.math.log
 
 class Field : AppCompatActivity() {
     private lateinit var vb: ActivityFieldBinding
-    private lateinit var gridItem: GridItemBinding
     private val fieldGenerator = FieldGenerator()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vb = ActivityFieldBinding.inflate(layoutInflater)
         setContentView(vb.root)
-
-        gridItem = GridItemBinding.inflate(layoutInflater)
 
         val resultDifficult = intent.getIntExtra(Constance.INTENT_GAME_SETTINGS, 0)
 
@@ -42,6 +39,7 @@ class Field : AppCompatActivity() {
             }
 
         }
+
     }
 
     fun fieldDisplay(field: Array<Array<Generator.Cell>>, gridView: GridView) {
