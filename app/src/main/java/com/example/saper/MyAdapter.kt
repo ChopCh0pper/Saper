@@ -12,6 +12,7 @@ import com.example.saper.field.Generator
 
 class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>, private val numColumns: Int) : BaseAdapter() {
     private var isGameOver = false
+    private var isGameContinue = false
     override fun getCount(): Int {
         return cells.size
     }
@@ -39,7 +40,9 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
         }
 
         if (!isGameOver) {
-            viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
+
+            if (!isGameContinue)
+                viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
 
             viewHolder.cell.setOnClickListener {
                 val cell = cells[position]
@@ -89,6 +92,7 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
     }
 
     private fun gameContinue(cell: Generator.Cell, viewHolder: ViewHolder) {
+        isGameContinue = true
 
         viewHolder.cell.setBackgroundResource(R.drawable.empty_cell_bg)
         if (cell.bombCount > 0) {
@@ -96,5 +100,7 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
         } else {
             viewHolder.cell.text = ""
         }
+
+        notifyDataSetChanged()
     }
 }
