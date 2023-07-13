@@ -5,6 +5,10 @@ import java.util.Random
 
 abstract class Generator{
     private lateinit var field: Array<Array<Cell>>
+    private var bombCount = 0
+    fun getbombCount(): Int {
+        return bombCount
+    }
     fun getField(): Array<Array<Cell>> {
         return field
     }
@@ -27,6 +31,7 @@ abstract class Generator{
             field[row][col].isBomb = true
             bombsPlaced++
         }
+        this.bombCount = bombCount
     }
 
     protected fun generateNumbers() {
@@ -59,5 +64,5 @@ abstract class Generator{
 
 
     data class Cell(var isBomb: Boolean = false, var bombCount: Int = 0,
-                    var ifFlag: Boolean = false, var isClosed: Boolean = true)
+                    var isFlag: Boolean = false, var isClosed: Boolean = true)
 }

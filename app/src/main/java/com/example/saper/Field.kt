@@ -1,21 +1,12 @@
 package com.example.saper
 
-import android.content.Context
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
-import android.view.Display
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.GridView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.saper.constance.Constance
 import com.example.saper.databinding.ActivityFieldBinding
-import com.example.saper.databinding.GridItemBinding
 import com.example.saper.field.FieldGenerator
 import com.example.saper.field.Generator
-import kotlin.math.log
 
 class Field : AppCompatActivity() {
     private lateinit var vb: ActivityFieldBinding
@@ -41,7 +32,7 @@ class Field : AppCompatActivity() {
             }
 
         }
-
+        vb.tvBombCount.text = fieldGenerator.getbombCount().toString()
     }
 
     fun fieldDisplay(field: Array<Array<Generator.Cell>>, gridView: GridView) {

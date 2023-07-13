@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.BaseAdapter
 import android.widget.Chronometer
 import android.widget.TextView
+import com.example.saper.field.FieldGenerator
 import com.example.saper.field.Generator
 
 class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>,
@@ -43,17 +44,31 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
         }
 
         if (!isGameOver) {
+            val cell = cells[position]
 
             if (!isGameContinue)
                 viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
 
             viewHolder.cell.setOnClickListener {
-                val cell = cells[position]
-
                 if (cell.isClosed) {
                     if (cell.isBomb) gameOver(viewHolder)
                     else gameContinue(cell, viewHolder)
                 }
+            }
+
+            viewHolder.cell.setOnLongClickListener {
+                if (cell.isClosed){
+                    if (!cell.isFlag) {
+                        viewHolder.cell.setBackgroundResource(R.drawable.test_flag)
+                        cell.isFlag = true
+                        viewHolder.cell.isClickable = false
+                    } else {
+                        viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
+                        cell.isFlag = false
+                        viewHolder.cell.isClickable = true
+                    }
+                }
+                true
             }
         } else {
             val cell = cells[position]
@@ -61,6 +76,7 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
                 viewHolder.cell.setBackgroundResource(R.drawable.bomb_cell_bg)
             }
             viewHolder.cell.setOnClickListener(null)
+            viewHolder.cell.setOnLongClickListener(null)
         }
 
         val screenWidth = getScreenWidth(context)
@@ -96,6 +112,7 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
 
     private fun gameContinue(cell: Generator.Cell, viewHolder: ViewHolder) {
         isGameContinue = true
+        cell.isClosed = false
 
         viewHolder.cell.setBackgroundResource(R.drawable.empty_cell_bg)
         if (cell.bombCount > 0) {
