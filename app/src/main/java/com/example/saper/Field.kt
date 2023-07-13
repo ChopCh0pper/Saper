@@ -25,6 +25,8 @@ class Field : AppCompatActivity() {
         vb = ActivityFieldBinding.inflate(layoutInflater)
         setContentView(vb.root)
 
+        vb.timer.start()
+
         val resultDifficult = intent.getIntExtra(Constance.INTENT_GAME_SETTINGS, 0)
 
         when(resultDifficult) {
@@ -48,7 +50,7 @@ class Field : AppCompatActivity() {
         gridView.stretchMode = GridView.STRETCH_COLUMN_WIDTH
 
         val flatList = field.flatten()
-        val adapter = MyAdapter(this, flatList, widthField)
+        val adapter = MyAdapter(this, flatList, widthField, vb.timer, vb.tvBombCount)
 
         gridView.adapter = adapter
     }

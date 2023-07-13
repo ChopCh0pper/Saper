@@ -11,12 +11,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/linearlayout_frame"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
 
+        <TextView
+            android:id="@+id/tvBombCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:background="@drawable/timer_count_bg"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:gravity="center"/>
 
+        <Button
+            android:id="@+id/btRestart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Chronometer
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/timer_count_bg"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:textSize="30dp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout

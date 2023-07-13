@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.BaseAdapter
+import android.widget.Chronometer
 import android.widget.TextView
 import com.example.saper.field.Generator
 
-class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>, private val numColumns: Int) : BaseAdapter() {
+class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>,
+                private val numColumns: Int, private val timer: Chronometer, private var tvBombCount: TextView
+                ) : BaseAdapter() {
     private var isGameOver = false
     private var isGameContinue = false
     override fun getCount(): Int {
@@ -83,8 +86,8 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
 
     private fun gameOver(viewHolder: ViewHolder) {
         isGameOver = true
+        timer.stop()
         /*
-            -выключение таймера
             -удаление сохранений
             -блокировка кнопки перезапуска игры
          */
