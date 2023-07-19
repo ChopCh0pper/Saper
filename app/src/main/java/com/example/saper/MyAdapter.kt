@@ -12,11 +12,10 @@ import android.widget.TextView
 import com.example.saper.field.FieldGenerator
 import com.example.saper.field.Generator
 
-class MyAdapter(private val context: Context, private val cells: List<Generator.Cell>,
-                private val numColumns: Int, private val timer: Chronometer, private var tvBombCount: TextView
+class MyAdapter(private val context: Context, private val cells: Array<Array<Game.Cell>>,
+                private val numColumns: Int
                 ) : BaseAdapter() {
-    private var isGameOver = false
-    private var isGameContinue = false
+    var clickListener:  ((Int, Int) -> Unit)? = null
     override fun getCount(): Int {
         return cells.size
     }
@@ -43,48 +42,16 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
             viewHolder = view.tag as ViewHolder
         }
 
-        if (!isGameOver) {
-            val cell = cells[position]
-
-            if (!isGameContinue)
-                viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
-
-            viewHolder.cell.setOnClickListener {
-                if (cell.isClosed) {
-                    if (cell.isBomb) gameOver(viewHolder)
-                    else gameContinue(cell, viewHolder)
-                }
-            }
-
-            viewHolder.cell.setOnLongClickListener {
-                if (cell.isClosed){
-                    if (!cell.isFlag) {
-                        viewHolder.cell.setBackgroundResource(R.drawable.test_flag)
-                        cell.isFlag = true
-                        viewHolder.cell.isClickable = false
-                    } else {
-                        viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
-                        cell.isFlag = false
-                        viewHolder.cell.isClickable = true
-                    }
-                }
-                true
-            }
-        } else {
-            val cell = cells[position]
-            if (cell.isBomb) {
-                viewHolder.cell.setBackgroundResource(R.drawable.bomb_cell_bg)
-            }
-            viewHolder.cell.setOnClickListener(null)
-            viewHolder.cell.setOnLongClickListener(null)
-        }
-
         val screenWidth = getScreenWidth(context)
         val cellSize = screenWidth / numColumns
         val layoutParams = viewHolder.cell.layoutParams
         layoutParams.width = cellSize
         layoutParams.height = cellSize
         viewHolder.cell.layoutParams = layoutParams
+
+        viewHolder.cell.setBackgroundResource(R.drawable.closed_cell_bg)
+
+        view.setOnClickListener { clickListener?.invoke(positionX, positionY) }
 
         return view
     }
@@ -98,29 +65,5 @@ class MyAdapter(private val context: Context, private val cells: List<Generator.
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         return displayMetrics.widthPixels
-    }
-
-    private fun gameOver(viewHolder: ViewHolder) {
-        isGameOver = true
-        timer.stop()
-        /*
-            -удаление сохранений
-            -блокировка кнопки перезапуска игры
-         */
-        notifyDataSetChanged()
-    }
-
-    private fun gameContinue(cell: Generator.Cell, viewHolder: ViewHolder) {
-        isGameContinue = true
-        cell.isClosed = false
-
-        viewHolder.cell.setBackgroundResource(R.drawable.empty_cell_bg)
-        if (cell.bombCount > 0) {
-            viewHolder.cell.text = cell.bombCount.toString()
-        } else {
-            viewHolder.cell.text = ""
-        }
-
-        notifyDataSetChanged()
     }
 }

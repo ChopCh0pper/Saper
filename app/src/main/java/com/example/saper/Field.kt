@@ -10,29 +10,17 @@ import com.example.saper.field.Generator
 
 class Field : AppCompatActivity() {
     private lateinit var vb: ActivityFieldBinding
-    private val fieldGenerator = FieldGenerator()
+    private lateinit var game: Game
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vb = ActivityFieldBinding.inflate(layoutInflater)
         setContentView(vb.root)
-
         vb.timer.start()
 
         val resultDifficult = intent.getIntExtra(Constance.INTENT_GAME_SETTINGS, 0)
+        game = Game(resultDifficult)
 
-        when(resultDifficult) {
-            Constance.INTENT_VALUE_EASY -> {
-                fieldGenerator.generateEasyField()
-                fieldDisplay(fieldGenerator.getField(), vb.field)
-            }
-
-            Constance.INTENT_VALUE_MIDL -> {
-                fieldGenerator.generateMidlField()
-                fieldDisplay(fieldGenerator.getField(), vb.field)
-            }
-
-        }
-        vb.tvBombCount.text = fieldGenerator.getbombCount().toString()
+        vb.timer.start()
     }
 
     fun fieldDisplay(field: Array<Array<Generator.Cell>>, gridView: GridView) {

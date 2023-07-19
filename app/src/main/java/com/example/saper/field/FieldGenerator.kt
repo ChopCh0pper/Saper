@@ -1,6 +1,7 @@
-package com.example.saper.field
+import com.example.saper.Game
+import com.example.saper.field.Generator
 
-class FieldGenerator: Generator() {
+class FieldGenerator : Generator() {
     private val COLS_EASY = 9
     private val COLS_MIDL = 16
 
@@ -10,14 +11,18 @@ class FieldGenerator: Generator() {
     private val BOMBS_EASY = 12
     private val BOMBS_MIDL = 45
 
-    fun generateEasyField() {
-        generateField(ROWS_EASY, COLS_EASY)
-        generateBombs(BOMBS_EASY)
-        generateNumbers()
+    fun generateField(rows: Int, cols: Int, bombCount: Int): Array<Array<Game.Cell>> {
+        var field = generateField(rows, cols)
+        field = generateBombs(bombCount, field)
+        field = generateNumbers(field)
+        return field
     }
-    fun generateMidlField() {
-        generateField(ROWS_MIDL, COLS_MIDL)
-        generateBombs(BOMBS_MIDL)
-        generateNumbers()
+
+    fun generateEasyField(): Array<Array<Game.Cell>> {
+        return generateField(ROWS_EASY, COLS_EASY, BOMBS_EASY)
+    }
+
+    fun generateMidlField(): Array<Array<Game.Cell>> {
+        return generateField(ROWS_MIDL, COLS_MIDL, BOMBS_MIDL)
     }
 }

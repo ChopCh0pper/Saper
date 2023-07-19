@@ -1,22 +1,19 @@
 package com.example.saper.field
 
+import com.example.saper.Game
 import java.util.Random
 
 
 abstract class Generator{
-    private lateinit var field: Array<Array<Cell>>
     private var bombCount = 0
     fun getbombCount(): Int {
         return bombCount
     }
-    fun getField(): Array<Array<Cell>> {
-        return field
-    }
 
-    protected fun generateField(rows: Int, cols: Int){
-        field = Array(rows) { Array(cols) { Cell() } }
+    protected fun generateField(rows: Int, cols: Int): Array<Array<Game.Cell>>{
+        return Array(rows) { Array(cols) { Game.Cell() } }
     }
-    protected fun generateBombs(bombCount: Int) {
+    protected fun generateBombs(bombCount: Int, field: Array<Array<Game.Cell>>): Array<Array<Game.Cell>> {
         val random = Random()
         var bombsPlaced = 0
 
@@ -32,9 +29,11 @@ abstract class Generator{
             bombsPlaced++
         }
         this.bombCount = bombCount
+
+        return field
     }
 
-    protected fun generateNumbers() {
+    protected fun generateNumbers(field: Array<Array<Game.Cell>>): Array<Array<Game.Cell>> {
         val deltas = arrayOf(
             intArrayOf(-1, -1), intArrayOf(-1, 0), intArrayOf(-1, 1),
             intArrayOf(0, -1), intArrayOf(0, 1),
@@ -60,9 +59,6 @@ abstract class Generator{
                 field[row][col].bombCount = bombCount
             }
         }
+        return field
     }
-
-
-    data class Cell(var isBomb: Boolean = false, var bombCount: Int = 0,
-                    var isFlag: Boolean = false, var isClosed: Boolean = true)
 }
