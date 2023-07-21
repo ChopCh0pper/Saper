@@ -1,6 +1,6 @@
 package com.example.saper.field
 
-import com.example.saper.Game
+import com.example.saper.game.Game
 import java.util.Random
 
 

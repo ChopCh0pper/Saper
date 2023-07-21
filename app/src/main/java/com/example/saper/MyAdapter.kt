@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.BaseAdapter
-import android.widget.Chronometer
 import android.widget.TextView
-import com.example.saper.field.FieldGenerator
-import com.example.saper.field.Generator
+import com.example.saper.game.Game
 
 class MyAdapter(private val context: Context, private val cells: Array<Array<Game.Cell>>,
                 private val numColumns: Int

@@ -1,4 +1,4 @@
-import com.example.saper.Game
+import com.example.saper.game.Game
 import com.example.saper.field.Generator
 
 class FieldGenerator : Generator() {

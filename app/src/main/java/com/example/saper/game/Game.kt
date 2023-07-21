@@ -1,4 +1,4 @@
-package com.example.saper
+package com.example.saper.game
 
 import FieldGenerator
 import android.widget.Chronometer
@@ -9,11 +9,12 @@ class Game(private val difficult: Int, private val timer: Chronometer) {
     private val fieldGenerator = FieldGenerator()
     private var isGameOver = false
     private var isGameContinue = false
+    private lateinit var field: Array<Array<Cell>>
+    var onGameStateChangeListener: ((List<Cell>) -> Unit)? = null
 
     data class Cell(var isBomb: Boolean = false, var bombCount: Int = 0,
                     var isFlag: Boolean = false, var isClosed: Boolean = true)
 
-    private lateinit var field: Array<Array<Cell>>
     fun getField(): Array<Array<Cell>> {
         return field
     }
